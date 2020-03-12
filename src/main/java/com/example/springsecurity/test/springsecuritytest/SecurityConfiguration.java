@@ -19,7 +19,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         // For example, if I want to do memory authentication, you can configure it like this.
         // method chaining: You can call a method behind a method and so on.
-        auth.inMemoryAuthentication().withUser("blah").password("blah").roles("USER").and().withUser("foo").password("foo").roles("USER");
+        auth.inMemoryAuthentication().withUser("blah").password("blah").roles("USER").and().withUser("foo").password("foo").roles("ADMIN");
         // There's Method level security (Not taught)
     }
 
@@ -41,10 +41,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // If you put / , it will read any API that has /
         // If you put /** , it will read any API that has / but accepting anything that behinds it, no matter how many slashes behind it. For example:
         // /foo , /example/adaw/rghrog
-        //
+        // REMEMBER*******the longest URLs are put at the top, the shortest ones are put at the bottom**********
         http.authorizeRequests()
-                .antMatchers("/**")
-                .hasAnyRole("USER", "ADMIN")
+                .antMatchers("/admin").hasRole("ADMIN") // Only admin can access
+                .antMatchers("/user").hasAnyRole("USER", "ADMIN") // User and Admin can access
+                .antMatchers("/").permitAll() // Allow everyone to use this
+//                .antMatchers("/**").hasAnyRole("USER", "ADMIN")
         // .hasRole("USER")
         .and()
         .formLogin();
