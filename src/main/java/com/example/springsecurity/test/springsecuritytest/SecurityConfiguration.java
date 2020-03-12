@@ -18,7 +18,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         // For example, if I want to do memory authentication, you can configure it like this.
         // method chaining: You can call a method behind a method and so on.
-        auth.inMemoryAuthentication().withUser("blah").password("blah").roles("USER");
+        auth.inMemoryAuthentication().withUser("blah").password("blah").roles("USER").and().withUser("foo").password("foo").roles("USER");
         // There's Method level security (Not taught)
     }
 
